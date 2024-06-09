@@ -7,6 +7,7 @@ export default class Snom extends SyncWave{
         super();
         if(!dom_helper.isDomInstance(element)) throw new Error('Snap snom creation failed');
         this.snom_element = element;
+        this.snom_parent = null;
         const unique_id = utility_helper.uID();
         this.snom_element.setAttribute('qualified_snom',true);
         this.snom_element.setAttribute('snom_identity',unique_id);
@@ -14,7 +15,11 @@ export default class Snom extends SyncWave{
             snom:this,
             snom_identity: unique_id
         }
-        this.call(SyncWave.EVENTS.onSnomCreate,details);
+        this.raise(SyncWave.EVENTS.onSnomCreate,details);
+        this.subscribe(SyncWave.EVENTS.onNewElementInContainer,(wave)=>{
+            const {uid,parent_id} = wave;
+            unique_id===uid&&(this.snom_parent = parent_id)
+        })
     }
 
     get css(){

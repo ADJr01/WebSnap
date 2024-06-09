@@ -12,16 +12,16 @@ export default class SyncWave extends EventTarget{
         return valid_events;
     }
 
-    register(event,onEvent){
+    subscribe(event,onEvent){
         if(!event in this.snapEventList || typeof onEvent!=='function')throw new Error('Invalid event registration detected');
         this.addEventListener(event,onEvent)
     }
 
-    call(event,detail){
+    raise(event,detail){
         this.dispatchEvent(new CustomEvent(event,detail))
     }
 
-    remove(event,onEvent){
+    unsubscribe(event,onEvent){
         this.removeEventListener(event,onEvent);
     }
 
