@@ -1,15 +1,20 @@
 import {dom_helper,utility_helper} from '../Utility/helper/'
 import ClassList from "./src/styleController/classList.js";
-export default class Snom{
+import SyncWave from "../SyncWave/index.js";
+export default class Snom extends SyncWave{
 
     constructor(element) {
+        super();
         if(!dom_helper.isDomInstance(element)) throw new Error('Snap snom creation failed');
         this.snom_element = element;
         const unique_id = utility_helper.uID();
         this.snom_element.setAttribute('qualified_snom',true);
         this.snom_element.setAttribute('snom_identity',unique_id);
-
-
+        const details = {
+            snom:this,
+            snom_identity: unique_id
+        }
+        this.call(SyncWave.EVENTS.onSnomCreate,details);
     }
 
     get css(){

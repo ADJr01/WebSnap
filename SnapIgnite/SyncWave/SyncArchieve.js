@@ -1,5 +1,6 @@
 export const valid_events = {
     snapInit: 'snap_init',
+    onSnomCreate: 'snom_element_created',
     onNewElementInContainer: 'snom_element_inject',
     onSnapElementRemovedFromContainer: 'snom_element_popped',
     onSnapInlineStyleUpdate: 'snom_element_inline_style_update',
