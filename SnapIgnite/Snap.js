@@ -1,3 +1,4 @@
+import Controller from "./controller/index.js";
 
 const demo_snap_options = {
     container: 'Type: String. Container is id or html element that contains all element those will get snap feature. Stat: Compulsory',
@@ -15,6 +16,8 @@ const demo_snap_options = {
 
 export default class Snap{
 
-    constructor() {
+    constructor(config) {
+        this.controller = new Controller();
+        this.controller.useConfiguration(config);
     }
 }
