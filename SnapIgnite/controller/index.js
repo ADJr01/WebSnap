@@ -13,8 +13,8 @@ export default class Controller{
         const containerDom = document.getElementById(container_id);
         if(!containerDom)throw new Error('Failed To Create Snap');
         this.Container = new Snom(containerDom);
-        const containerChilds = Array.from(this.Container.snom_element);
-        containerChilds.forEach(element=>{
+        const containerChildren = Array.from(this.Container.snom_element.children);
+        containerChildren.forEach(element=>{
             this.ChildList.push(new Snom(element));
         });
         return true;

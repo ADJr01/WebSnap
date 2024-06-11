@@ -9,7 +9,7 @@ export default class ClassList{
     }
 
     get classes(){
-        return this.creatorElement.snom.classList;
+        return this.creatorElement.snom_element.classList;
     }
 
 
