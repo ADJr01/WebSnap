@@ -1,11 +1,19 @@
 import Snom from "../Snom/index.js";
+import SyncWave from "../SyncWave/index.js";
+import initialiseSnapIgnite from "./src/initialiseSnapIgnite.js";
 
 export default class Controller{
 
     constructor() {
         this.Container = null;
+        this.___syncWave_instance___ = new SyncWave();
         this.features =null;
         this.ChildList = [];
+        initialiseSnapIgnite(this.___syncWave_instance___);
+    }
+
+    static get Observer(){
+        return this.___syncWave_instance___;
     }
 
     useConfiguration(snapConfig){
