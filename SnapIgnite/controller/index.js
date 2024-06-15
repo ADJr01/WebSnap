@@ -7,15 +7,21 @@ export default class Controller{
     constructor() {
         this.Container = null;
         this.___syncWave_instance___ = new SyncWave();
+        console.log(this.___syncWave_instance___,'aa')
         this.features =null;
         this.ChildList = [];
         initialiseSnapIgnite(this.___syncWave_instance___);
         this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
             this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
+        });
+        this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
+            console.log(event)
+            this.ChildList.push(event.snom);
         })
     }
 
     static get Observer(){
+       // console.log('called: ',this.___syncWave_instance___)
         return this.___syncWave_instance___;
     }
 

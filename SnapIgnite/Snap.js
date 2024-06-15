@@ -10,7 +10,6 @@ const demo_snap_options = {
         },
         shrink: 'Type: Boolean',
         shrink_feature: {},
-
     }
 }
 
