@@ -11,7 +11,7 @@ export default class Controller{
         this.ChildList = [];
         initialiseSnapIgnite(this.___syncWave_instance___);
         this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
-            this.ChildList.push( new Snom(e.detail.snom_element));
+            this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
         })
     }
 

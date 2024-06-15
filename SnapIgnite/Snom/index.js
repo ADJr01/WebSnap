@@ -16,10 +16,6 @@ export default class Snom extends SyncWave{
             snom_identity: unique_id
         }
         this.raise(SyncWave.EVENTS.onSnomCreate,details);
-        this.subscribe(SyncWave.EVENTS.onNewElementInContainer,(wave)=>{
-            const {uid,parent_id} = wave;
-            unique_id===uid&&(this.snom_parent = parent_id)
-        })
     }
 
     get css(){
