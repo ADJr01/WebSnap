@@ -10,6 +10,9 @@ export default class Controller{
         this.features =null;
         this.ChildList = [];
         initialiseSnapIgnite(this.___syncWave_instance___);
+        this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
+            this.ChildList.push( new Snom(e.detail.snom_element));
+        })
     }
 
     static get Observer(){
