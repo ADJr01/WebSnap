@@ -1,28 +1,31 @@
 import Snom from "../Snom/index.js";
 import SyncWave from "../SyncWave/index.js";
 import initialiseSnapIgnite from "./src/initialiseSnapIgnite.js";
+import {utility_helper} from "../Utility/helper/index.js";
 
 export default class Controller{
 
     constructor() {
+        this._snap_controller32_id = utility_helper.uID(32);
         this.Container = null;
-        this.___syncWave_instance___ = new SyncWave();
-        console.log(this.___syncWave_instance___,'aa')
         this.features =null;
         this.ChildList = [];
-        initialiseSnapIgnite(this.___syncWave_instance___);
-        this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
+        initialiseSnapIgnite(Controller.Observer);
+        Controller.Observer.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
+            const self_identity = this.Container.snom_element.getAttribute('snom_identity');
+            const incoming_child_parent = e.detail.parent_snom_identity;
+            if(self_identity!==incoming_child_parent)return false;
             this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
         });
-        this.___syncWave_instance___.subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
-            console.log(event)
-            this.ChildList.push(event.snom);
+        Controller.Observer.subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
+            console.log(this);
         })
     }
 
     static get Observer(){
-       // console.log('called: ',this.___syncWave_instance___)
-        return this.___syncWave_instance___;
+       if(window.snap_observer_instance && window.snap_observer_instance instanceof SyncWave)return window.snap_observer_instance;
+        window.snap_observer_instance = new SyncWave();
+        return window.snap_observer_instance;
     }
 
     useConfiguration(snapConfig){

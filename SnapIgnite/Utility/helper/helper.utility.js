@@ -11,6 +11,10 @@ export default function (){
         return result;
     }
 
+    function snom_parent_identity(){
+
+    }
+
     return {
         uID:uuID,
     }

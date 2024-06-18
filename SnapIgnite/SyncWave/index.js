@@ -25,6 +25,7 @@ export default class SyncWave extends EventTarget{
         this.removeEventListener(event,onEvent);
     }
 
-
 }
+
+
 
