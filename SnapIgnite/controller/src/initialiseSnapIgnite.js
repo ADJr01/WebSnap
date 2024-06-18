@@ -1,7 +1,9 @@
 import SyncWave from "../../SyncWave/index.js";
+import Query from "./Query.js";
 
 
 export default function (observer){
+    Query();
     const appendChild  = HTMLElement.prototype.appendChild;
     const removeChild = HTMLElement.prototype.removeChild;
     //modify default functionality of HTML Element;

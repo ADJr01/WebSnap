@@ -6,7 +6,7 @@ import {utility_helper} from "../Utility/helper/index.js";
 export default class Controller{
 
     constructor() {
-        this._snap_controller32_id = utility_helper.uID(32);
+        this.controller32_id = utility_helper.uID(32);
         this.Container = null;
         this.features =null;
         this.ChildList = [];
