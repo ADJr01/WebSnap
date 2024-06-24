@@ -6,26 +6,28 @@ import {utility_helper} from "../Utility/helper/index.js";
 export default class Controller{
 
     constructor() {
-        this.controller32_id = utility_helper.uID(32);
+        this.controller16_id = utility_helper.uID(16);
         this.Container = null;
         this.features =null;
         this.ChildList = [];
-        initialiseSnapIgnite(Controller.Observer);
-        Controller.Observer.subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
+        initialiseSnapIgnite(Controller.Observer(this));
+        Controller.Observer(this).subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
             const self_identity = this.Container.snom_element.getAttribute('snom_identity');
             const incoming_child_parent = e.detail.parent_snom_identity;
             if(self_identity!==incoming_child_parent)return false;
             this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
         });
-        Controller.Observer.subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
+        Controller.Observer(this).subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
             console.log(this);
         })
     }
 
-    static get Observer(){
-       if(window.snap_observer_instance && window.snap_observer_instance instanceof SyncWave)return window.snap_observer_instance;
-        window.snap_observer_instance = new SyncWave();
-        return window.snap_observer_instance;
+    static Observer(instance_linker){
+        if(!instance_linker instanceof Controller)throw new Error('Snap Linking Failed');
+        const identity_16b = instance_linker.controller16_id;
+        if(window.snapENV && window.snapENV[identity_16b])return window.snapENV[identity_16b];
+        window.snapENV = {...window.snapENV,identity_16b: new SyncWave()}
+        return window.snapENV;
     }
 
     useConfiguration(snapConfig){
