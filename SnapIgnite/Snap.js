@@ -18,5 +18,8 @@ export default class Snap{
     constructor(config) {
         this.controller = new Controller();
         this.controller.useConfiguration(config);
+
     }
+
+
 }

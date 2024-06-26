@@ -1,6 +1,6 @@
 import Snom from "../Snom/index.js";
 import SyncWave from "../SyncWave/index.js";
-import initialiseSnapIgnite from "./src/initialiseSnapIgnite.js";
+import initialiseSnapIgnite, {SharedInstance} from "./src/initialiseSnapIgnite.js";
 import {utility_helper} from "../Utility/helper/index.js";
 
 export default class Controller{
@@ -10,24 +10,24 @@ export default class Controller{
         this.Container = null;
         this.features =null;
         this.ChildList = [];
-        initialiseSnapIgnite(Controller.Observer(this));
-        Controller.Observer(this).subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
+        initialiseSnapIgnite(this.controller16_id);
+        Controller.Observer(SharedInstance().Observer()).subscribe(SyncWave.EVENTS.onNewElementInContainer,e=>{
             const self_identity = this.Container.snom_element.getAttribute('snom_identity');
             const incoming_child_parent = e.detail.parent_snom_identity;
             if(self_identity!==incoming_child_parent)return false;
             this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
         });
-        Controller.Observer(this).subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
+        Controller.Observer(this.controller16_id).subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
             console.log(this);
         })
     }
 
-    static Observer(instance_linker){
-        if(!instance_linker instanceof Controller)throw new Error('Snap Linking Failed');
-        const identity_16b = instance_linker.controller16_id;
-        if(window.snapENV && window.snapENV[identity_16b])return window.snapENV[identity_16b];
-        window.snapENV = {...window.snapENV,identity_16b: new SyncWave()}
-        return window.snapENV;
+    static Observer(linker_16D){
+        if(!linker_16D)throw new Error('Snap Linking Failed');
+        if(window.snapENV && window.snapENV[linker_16D])return window.snapENV[linker_16D];
+        !window.snapENV && (window.snapENV = {});
+        window.snapENV[linker_16D] = new SyncWave();
+        return window.snapENV[linker_16D];
     }
 
     useConfiguration(snapConfig){

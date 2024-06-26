@@ -2,6 +2,7 @@ import {dom_helper,utility_helper} from '../Utility/helper/'
 import ClassList from "./src/styleController/classList.js";
 import SyncWave from "../SyncWave/index.js";
 import Controller from "../controller/index.js";
+import {SharedInstance} from "../controller/src/initialiseSnapIgnite.js";
 export default class Snom{
 
     constructor(element) {
@@ -15,7 +16,7 @@ export default class Snom{
             snom:this,
             snom_identity: unique_id
         }
-        Controller.Observer.raise(SyncWave.EVENTS.onSnomCreate,{detail});
+        Controller.Observer(SharedInstance().Observer()).raise(SyncWave.EVENTS.onSnomCreate,{detail});
     }
 
     get css(){
