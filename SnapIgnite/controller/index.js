@@ -18,7 +18,12 @@ export default class Controller{
             this.ChildList = [...this.ChildList,new Snom(e.detail.snom_element)];
         });
         Controller.Observer(this.controller16_id).subscribe(SyncWave.EVENTS.onSnomCreate,event=>{
-            console.log(this);
+            if(!this.Container)return false;
+            const {detail} = event;
+            const {snom_identity,snom} = detail;
+            const parent_identity = this.Container.snom_element.getAttribute('snom_identity');
+            if(parent_identity===snom_identity)return false;
+            // things to do on new Snom Create
         })
     }
 
