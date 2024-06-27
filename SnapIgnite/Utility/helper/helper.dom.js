@@ -4,6 +4,7 @@ export default function (){
     }
 
     function parseStyleSheet(htmlElem){
+        console.log('element style: ',htmlElem)
         if(!htmlElem.style)return {}
         const style_sheet=  {};
         const elementStyle = htmlElem.style;

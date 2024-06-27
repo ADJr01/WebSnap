@@ -3,6 +3,7 @@ import ClassList from "./src/styleController/classList.js";
 import SyncWave from "../SyncWave/index.js";
 import Controller from "../controller/index.js";
 import {SharedInstance} from "../controller/src/initialiseSnapIgnite.js";
+import StyleSheet from "./src/styleController/styleSheet.js";
 export default class Snom{
 
     constructor(element) {
@@ -21,7 +22,8 @@ export default class Snom{
 
     get css(){
         return {
-            classList: new ClassList(this.snom_element)
+            classList: new ClassList(this.snom_element),
+            stylesheet: new StyleSheet(this.snom_element),
         }
     }
 

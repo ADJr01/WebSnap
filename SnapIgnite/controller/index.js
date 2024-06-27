@@ -23,7 +23,7 @@ export default class Controller{
             const {snom_identity,snom} = detail;
             const parent_identity = this.Container.snom_element.getAttribute('snom_identity');
             if(parent_identity===snom_identity)return false;
-            // things to do on new Snom Create
+            console.log(this)
         })
     }
 
