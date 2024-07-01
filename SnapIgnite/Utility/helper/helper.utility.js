@@ -1,3 +1,5 @@
+
+
 export default function (){
     function uuID(length=8) {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
@@ -11,7 +13,10 @@ export default function (){
         return result;
     }
 
-    function snom_parent_identity(){
+    function elementIsASnom(element){
+        if(!snom instanceof HTMLElement)return false;
+        const is_qualifies_snom = snom.getAttribute('qualified_snom');
+        return Boolean(is_qualifies_snom);
 
     }
 
