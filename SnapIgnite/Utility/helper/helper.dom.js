@@ -17,9 +17,20 @@ export default function (){
 
     }
 
+    function readAttributes(element){
+        const keys = Object.values(element.attributes);
+        const attachedAttribs= {};
+        keys.forEach(key=>{
+            attachedAttribs[key] = element.getAttribute(key);
+        })
+        return attachedAttribs;
+
+    }
+
 
     return {
         isDomInstance: isValidHTMLElemet,
-        parseStyle: parseStyleSheet
+        parseStyle: parseStyleSheet,
+        readAttributes,
     }
 }

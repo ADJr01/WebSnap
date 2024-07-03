@@ -2,6 +2,7 @@ import Controller from "./controller/index.js";
 
 const demo_snap_options = {
     container: 'Type: String. Container is id or html element that contains all element those will get snap feature. Stat: Compulsory',
+    allowNestedSnap:'Type: Boolean. if true every child of snap container those have their own children will be tracked as individual snap.Infinity Context tracking',
     features: {
         drag: 'Type: Boolean.',
         drag_feature: {

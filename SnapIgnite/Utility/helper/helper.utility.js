@@ -13,14 +13,16 @@ export default function (){
         return result;
     }
 
-    function elementIsASnom(element){
-        if(!snom instanceof HTMLElement)return false;
-        const is_qualifies_snom = snom.getAttribute('qualified_snom');
+    function elementIsSnom(element){
+        if(!element instanceof HTMLElement)return false;
+        const is_qualifies_snom = element.getAttribute('qualified_snom');
         return Boolean(is_qualifies_snom);
 
     }
 
     return {
         uID:uuID,
+        elementIsSnom,
+
     }
 }

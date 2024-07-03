@@ -1,0 +1,15 @@
+<div>
+ #if items and items.length:
+    #for item in (items,index):
+         <span>{item}</span>
+    .for
+ .if
+
+ #if user.isLoggesIn and user.isAuthorized:
+        <!-- do something-->
+ .if
+
+     #for item in range(10):
+        <span>{i}</span>
+     .for
+</div>

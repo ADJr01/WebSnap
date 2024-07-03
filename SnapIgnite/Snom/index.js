@@ -7,12 +7,14 @@ import StyleSheet from "./src/styleController/styleSheet.js";
 export default class Snom{
 
     constructor(element) {
-        if(!dom_helper.isDomInstance(element)) throw new Error('Snap snom creation failed');
+        if(!dom_helper.isDomInstance(element)) throw new Error('Snap: Snom creation failed');
+        if(utility_helper.elementIsSnom(element))return false;
         this.snom_element = element;
         this.snom_parent = element.parentNode;
         const unique_id = utility_helper.uID();
         this.snom_element.setAttribute('qualified_snom',true);
         this.snom_element.setAttribute('snom_identity',unique_id);
+        this.snom_attributes = dom_helper.readAttributes(element);
         const detail = {
             snom:this,
             snom_identity: unique_id
