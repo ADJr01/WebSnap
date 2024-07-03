@@ -23,7 +23,7 @@ export default class Controller{
             const {snom_identity,snom} = detail;
             const parent_identity = this.Container.snom_element.getAttribute('snom_identity');
             if(parent_identity===snom_identity)return false;
-            console.log(this)
+             //things to be done on new element create
         })
     }
 
@@ -40,6 +40,7 @@ export default class Controller{
         const containerDom = document.getElementById(container_id);
         if(!containerDom)throw new Error('Failed To Create Snap');
         this.Container = new Snom(containerDom);
+        console.log('Container: ',this.Container)
         const containerChildren = Array.from(this.Container.snom_element.children);
         containerChildren.forEach(element=>{
             this.ChildList.push(new Snom(element));

@@ -11,6 +11,7 @@ export default class Snom{
         if(utility_helper.elementIsSnom(element))return false;
         this.snom_element = element;
         this.snom_parent = element.parentNode;
+        this.__inline_snom_styles = null;
         const unique_id = utility_helper.uID();
         this.snom_element.setAttribute('qualified_snom',true);
         this.snom_element.setAttribute('snom_identity',unique_id);
@@ -23,9 +24,10 @@ export default class Snom{
     }
 
     get css(){
+        !this.__inline_snom_styles && (this.__inline_snom_styles=new StyleSheet(this.snom_element))
         return {
             classList: new ClassList(this.snom_element),
-            stylesheet: new StyleSheet(this.snom_element),
+            stylesheet: this.__inline_snom_styles,
         }
     }
 
