@@ -1,6 +1,8 @@
 # WebSnap 🌐✨
 
 Welcome to **WebSnap**, the revolutionary snapping system for the web! 🚀 This project aims to bring efficiency and elegance to DOM management, leveraging an event-based signaling system for real-time updates and inter-component communication.
+<span style="color: red;">This project is still under heavy development and is an experimental project.</span>
+**This project is still under heavy development and is an experimental project.**
 
 ## What is WebSnap? 🤔
 
