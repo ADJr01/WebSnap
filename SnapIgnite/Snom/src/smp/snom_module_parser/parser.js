@@ -1,55 +1,4 @@
-function parseHTMLString(htmlString) {
-    const result = [];
-    let i = 0;
-    const stack = [];
-    while (i < htmlString.length) {
-        if (htmlString[i] === '<') {
-            // Handle tags
-            let tagStart = i;
-            while (htmlString[i] !== '>' && i < htmlString.length) {
-                i++;
-            }
-            let tagEnd = i;
-            let tagString = htmlString.slice(tagStart, tagEnd + 1);
-            if (tagString[1] === '/') {
-                // Closing tag
-                let tagName = tagString.slice(2, -1);
-                if (stack.length > 0 && stack[stack.length - 1].tag === tagName) {
-                    const completedElement = stack.pop();
-                    if (stack.length === 0) {
-                        result.push(completedElement);
-                    }
-                }
-            } else {
-                // Opening tag
-                const { tagName, attributes } = parseTag(tagString);
-                const element = {
-                    tag: tagName,
-                    attributes: attributes,
-                    childrens: []
-                };
-                if (stack.length > 0) {
-                    stack[stack.length - 1].childrens.push(element);
-                }
-                stack.push(element);
-            }
-            i++; // Move past '>'
-        } else {
-            // Handle text content
-            let textStart = i;
-            while (htmlString[i] !== '<' && i < htmlString.length) {
-                i++;
-            }
-            let textContent = htmlString.slice(textStart, i).trim();
-            if (textContent && stack.length > 0) {
-                stack[stack.length - 1].childrens.push(textContent);
-            }
-        }
-    }
-
-    return result.length === 1 ? result[0] : null;
-}
-function templateToObject(htmlString) {
+function templateToObjectCompile(htmlString) {
     function parseTag(tagString) {
         tagString = tagString.trim();
         let i = 1; // Skip the initial '<'
@@ -87,7 +36,56 @@ function templateToObject(htmlString) {
         return { tagName, attributes };
     }
 
-
+    function parseHTMLString(htmlString) {
+        const result = [];
+        let i = 0;
+        const stack = [];
+        while (i < htmlString.length) {
+            if (htmlString[i] === '<') {
+                // Handle tags
+                let tagStart = i;
+                while (htmlString[i] !== '>' && i < htmlString.length) {
+                    i++;
+                }
+                let tagEnd = i;
+                let tagString = htmlString.slice(tagStart, tagEnd + 1);
+                if (tagString[1] === '/') {
+                    // Closing tag
+                    let tagName = tagString.slice(2, -1);
+                    if (stack.length > 0 && stack[stack.length - 1].tag === tagName) {
+                        const completedElement = stack.pop();
+                        if (stack.length === 0) {
+                            result.push(completedElement);
+                        }
+                    }
+                } else {
+                    // Opening tag
+                    const { tagName, attributes } = parseTag(tagString);
+                    const element = {
+                        tag: tagName,
+                        attributes: attributes,
+                        children: []
+                    };
+                    if (stack.length > 0) {
+                        stack[stack.length - 1].children.push(element);
+                    }
+                    stack.push(element);
+                }
+                i++; // Move past '>'
+            } else {
+                // Handle text content
+                let textStart = i;
+                while (htmlString[i] !== '<' && i < htmlString.length) {
+                    i++;
+                }
+                let textContent = htmlString.slice(textStart, i).trim();
+                if (textContent && stack.length > 0) {
+                    stack[stack.length - 1].children.push(textContent);
+                }
+            }
+        }
+        return result;
+    }
 
     return parseHTMLString(htmlString);
 }
