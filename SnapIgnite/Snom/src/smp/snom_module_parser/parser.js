@@ -1,4 +1,4 @@
-function templateToObjectCompile(htmlString) {
+export default function (htmlString) {
     function parseTag(tagString) {
         tagString = tagString.trim();
         let i = 1; // Skip the initial '<'
