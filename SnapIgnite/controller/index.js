@@ -48,5 +48,10 @@ export default class Controller{
         return true;
     }
 
+    createChildSnom(template){
+        //verify if it is a valid html string
+        //if valid then send it template parser to create snom element
+    }
+
 
 }
