@@ -40,7 +40,6 @@ export default class Controller{
         const containerDom = document.getElementById(container_id);
         if(!containerDom)throw new Error('Failed To Create Snap');
         this.Container = new Snom(containerDom);
-        console.log('Container: ',this.Container)
         const containerChildren = Array.from(this.Container.snom_element.children);
         containerChildren.forEach(element=>{
             this.ChildList.push(new Snom(element));
@@ -50,6 +49,28 @@ export default class Controller{
 
     createChildSnom(template){
         //verify if it is a valid html string
+        function isValidHTML(htmlString) {
+            // Remove content between tags for simplicity
+            htmlString = htmlString.replace(/>[^<]*</g, '><');
+
+            const stack = [];
+            const regex = /<\/?([a-z]+[1-6]?)>/gi;
+            let match;
+
+            while ((match = regex.exec(htmlString)) !== null) {
+                const tag = match[1];
+
+                if (match[0][1] !== '/') { // opening tag
+                    stack.push(tag);
+                } else { // closing tag
+                    if (stack.length === 0 || stack.pop() !== tag) {
+                        return false;
+                    }
+                }
+            }
+
+            return stack.length === 0;
+        }
         //if valid then send it template parser to create snom element
     }
 

@@ -20,6 +20,11 @@ export default class Snap{
         this.controller = new Controller();
         this.controller.useConfiguration(config);
 
+
+
+        
+
+
     }
 
 
