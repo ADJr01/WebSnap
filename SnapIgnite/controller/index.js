@@ -2,6 +2,8 @@ import Snom from "../Snom/index.js";
 import SyncWave from "../SyncWave/index.js";
 import initialiseSnapIgnite, {SharedInstance} from "./src/initialiseSnapIgnite.js";
 import {utility_helper} from "../Utility/helper/index.js";
+import helperDom from "../Utility/helper/helper.dom.js";
+import Snom_module_compiler from "../Snom/src/smp/snom_module_compiler/index.js";
 
 export default class Controller{
 
@@ -49,28 +51,7 @@ export default class Controller{
 
     createChildSnom(template){
         //verify if it is a valid html string
-        function isValidHTML(htmlString) {
-            // Remove content between tags for simplicity
-            htmlString = htmlString.replace(/>[^<]*</g, '><');
-
-            const stack = [];
-            const regex = /<\/?([a-z]+[1-6]?)>/gi;
-            let match;
-
-            while ((match = regex.exec(htmlString)) !== null) {
-                const tag = match[1];
-
-                if (match[0][1] !== '/') { // opening tag
-                    stack.push(tag);
-                } else { // closing tag
-                    if (stack.length === 0 || stack.pop() !== tag) {
-                        return false;
-                    }
-                }
-            }
-
-            return stack.length === 0;
-        }
+        const smpc = new Snom_module_compiler(template).compile();
         //if valid then send it template parser to create snom element
     }
 

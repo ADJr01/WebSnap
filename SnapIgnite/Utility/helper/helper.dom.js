@@ -27,10 +27,34 @@ export default function (){
 
     }
 
+    function isValidHTML(htmlString) {
+        // Remove content between tags for simplicity
+        htmlString = htmlString.replace(/>[^<]*</g, '><');
+
+        const stack = [];
+        const regex = /<\/?([a-z]+[1-6]?)>/gi;
+        let match;
+
+        while ((match = regex.exec(htmlString)) !== null) {
+            const tag = match[1];
+
+            if (match[0][1] !== '/') { // opening tag
+                stack.push(tag);
+            } else { // closing tag
+                if (stack.length === 0 || stack.pop() !== tag) {
+                    return false;
+                }
+            }
+        }
+
+        return stack.length === 0;
+    }
+
 
     return {
         isDomInstance: isValidHTMLElemet,
         parseStyle: parseStyleSheet,
         readAttributes,
+        isValidHTML
     }
 }
