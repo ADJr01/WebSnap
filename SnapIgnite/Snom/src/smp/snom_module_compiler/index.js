@@ -46,6 +46,15 @@ class TemplateParsingError extends Error{
     }
 }
 
+class SMPCError extends Error {
+    constructor(message) {
+        super(message);
+        this.name='TemplateParsingError'
+        this.message=message;
+
+    }
+}
+
 export default class Snom_module_compiler{
 
     constructor(template) {
@@ -65,6 +74,8 @@ export default class Snom_module_compiler{
     compile(){
         //compiler
         this.templateTreeObject =  parser(this.template);
+        if(!this.isCompiled && !Array.isArray(this.templateTreeObject)) throw new SMPCError("Unable To Compile template during compilation face")
+        this.templateTreeElement = componentBuilder(this.templateTreeObject)
         return this;
     }
 
