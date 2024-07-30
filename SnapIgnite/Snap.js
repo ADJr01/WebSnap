@@ -19,12 +19,10 @@ export default class Snap{
     constructor(config) {
         this.controller = new Controller();
         this.controller.useConfiguration(config);
+    }
 
-
-
-        
-
-
+    createChild(template){
+        return this.controller.createChildSnom(template);
     }
 
 

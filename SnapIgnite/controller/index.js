@@ -51,8 +51,14 @@ export default class Controller{
 
     createChildSnom(template){
         //verify if it is a valid html string
-        const smpc = new Snom_module_compiler(template).compile();
+        const smpc = new Snom_module_compiler(template);
+        smpc.compile();
         //if valid then send it template parser to create snom element
+        if(!smpc.Elements.length)throw new Error("Child Assertion Failed")
+        smpc.Elements.forEach(element=>{
+            this.Container.snom_element.appendChild(element)
+        })
+
     }
 
 

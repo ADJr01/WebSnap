@@ -46,7 +46,6 @@ export default function (){
                 }
             }
         }
-
         return stack.length === 0;
     }
 

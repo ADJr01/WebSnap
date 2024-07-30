@@ -38,7 +38,7 @@ function componentBuilder(templateObjectArray){
     }
     return elementList;
 }
-class TemplateParsingError extends Error{
+class SMPTemplateParsingError extends Error{
     constructor(message) {
         super(message);
         this.name='TemplateParsingError'
@@ -62,8 +62,7 @@ export default class Snom_module_compiler{
         this.templateTreeObject=null;
         this.templateTreeElement=null;
         const isValidTemplate = dom_helper.isValidHTML(template)
-        if (!isValidTemplate) return new TemplateParsingError('Failed To Parse Template')
-
+       // if (!isValidTemplate) throw new SMPTemplateParsingError(`Invalid Template: ${template}.template validity: ${isValidTemplate?'valid':'invalid'}`)
     }
 
     get isCompiled(){
@@ -72,12 +71,15 @@ export default class Snom_module_compiler{
 
 
     compile(){
+        if(this.isCompiled)return
         //compiler
         this.templateTreeObject =  parser(this.template);
-        if(!this.isCompiled && !Array.isArray(this.templateTreeObject)) throw new SMPCError("Unable To Compile template during compilation face")
+        if(!this.isCompiled || !Array.isArray(this.templateTreeObject)) throw new SMPCError("Unable To Compile template during compilation face")
         this.templateTreeElement = componentBuilder(this.templateTreeObject)
         return this;
     }
+
+    get Elements(){return this.templateTreeElement}
 
 
 }
